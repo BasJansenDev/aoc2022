@@ -1,40 +1,37 @@
 # A X r
 # B Y p
 # C Z s
-draws = {'A' : 'X', 'B' : 'Y', 'C' : 'Z'}
-wins = {'A' : 'Z', 'B' : 'X', 'C' : 'Y'}
-pts = {'X' : 1, 'Y' : 2, 'Z' : 3}
-pt = {'X' : 0, 'Y' : 3, 'Z' : 6}
-move = {'A' : 'X', 'B' : 'Y', 'C' : 'Z'}
+wins = {'A' : 'C', 'B' : 'A', 'C' : 'B'}
+losses = dict((v,k) for k,v in wins.items())
+move_points = {'A' : 1, 'B' : 2, 'C' : 3}
+move = {'X' : 'A', 'Y' : 'B', 'Z' : 'C'}
 
-def winCalc(a,b):
+def calculateMatchPoints(a,b):
     if wins[a] == b:
         return 0
-    if(draws[a] == b):
+    if(a == b):
         return 3
     else:
         return 6
 
-def winCalc2(a,b):
+def calculateMatchPoints2(a,b):
     if(b == 'X'):
-        return wins[a]
+        return move_points[wins[a]]
     if(b == 'Y'):
-        return draws[a]
+        return 3 + move_points[a]
     else:
-        return move[[k for k, v in wins.items() if v == move[a]][0]]
+        return 6 + move_points[losses[a]]
 
-def main():
+def main(part1):
     lst = inputAsList()
     total = 0
-    for match in lst:
-        total += pts[match[1]] + winCalc(match[0],match[1])
-    return total
-
-def main2():
-    lst = inputAsList()
-    total = 0
-    for match in lst:
-        total += pt[match[1]] + pts[winCalc2(match[0],match[1])]
+    if(part1):
+        for match in lst:
+            m = move[match[1]]
+            total += move_points[m] + calculateMatchPoints(match[0],m)
+    else:
+        for match in lst:
+            total += calculateMatchPoints2(match[0],match[1])
     return total
 
 def inputAsList():
@@ -45,5 +42,5 @@ def inputAsList():
         c.append(b.split(' '))
     return c
 
-print(main())
-print(main2())
+print(main(True))
+print(main(False))
