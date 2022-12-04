@@ -6,7 +6,7 @@ def main(part1):
         r2 = pair[1].split('-')
         r1 = set(range(int(r1[0]),int(r1[1])+1))
         r2 = set(range(int(r2[0]),int(r2[1])+1))
-        if(part1 and (r1.issubset(r2) or r2.issubset(r1))):
+        if(part1 and (r1 <= r2 or r2 <= r1)):
             total += 1
         elif(not part1 and len(r1 & r2) > 0):
             total += 1
